@@ -7,8 +7,15 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
     private static final int STEP_ARRAY_BOUNDS = 10;
     private int sizeArray = 1;
     private int size = 0;
-    private Container[] value = new Container[sizeArray];
+    private Container[] value;
 
+    public MyArrayListImpl() {
+        value = new Container[sizeArray];
+    }
+
+    public MyArrayListImpl(int inItSize) {
+        value = new Container[inItSize];
+    }
 
     private static class Container<T> {
         Integer index;
@@ -99,11 +106,10 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
 
     private int indexOf(Container<T> curr, T item, int modifier) {
         if (curr.value.equals(item)) return curr.index;
-        if(modifier==1) {
-            if (curr.index == size-1) return -1;
-        }
-        else{
-            if(curr.index == 0) return -1;
+        if (modifier == 1) {
+            if (curr.index == size - 1) return -1;
+        } else {
+            if (curr.index == 0) return -1;
         }
         return indexOf(value[curr.index + modifier], item, modifier);
     }
@@ -120,17 +126,16 @@ public class MyArrayListImpl<T> implements MyArrayList<T> {
 
     @Override
     public Object get(int index) {
-        if (size == 0 || index>=size) throw new NoSuchElementException();
+        if (size == 0 || index >= size) throw new NoSuchElementException();
         return value[index].value;
     }
 
     @Override
     public boolean equals(MyArrayList otherList) {
-        if(otherList.size() != this.size)
+        if (otherList.size() != this.size)
             return false;
-        for(int i =0; i<size;i++)
-        {
-            if(this.value[i].value!=otherList.get(i))
+        for (int i = 0; i < size; i++) {
+            if (this.value[i].value != otherList.get(i))
                 return false;
         }
         return true;
